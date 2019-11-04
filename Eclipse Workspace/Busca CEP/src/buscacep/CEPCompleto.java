@@ -10,12 +10,13 @@ public class CEPCompleto {
 	public String bairro;
 	public String localidade;
 	public String uf;
+	public String unidade;
 	public String ibge;
 	public String gia;
 
 	public String erro;
 	
-	public CEPCompleto(String cep, String logradouro, String complemento, String bairro, String localidade, String uf,
+	public CEPCompleto(String cep, String logradouro, String complemento, String bairro, String localidade, String uf, String unidade,
 			String ibge, String gia) {
 		this.cep = cep;
 		this.logradouro = logradouro;
@@ -23,6 +24,7 @@ public class CEPCompleto {
 		this.bairro = bairro;
 		this.localidade = localidade;
 		this.uf = uf;
+		this.unidade = unidade;
 		this.ibge = ibge;
 		this.gia = gia;
 	}
@@ -34,6 +36,6 @@ public class CEPCompleto {
 	@Override
 	public String toString() {
 		return "[cep=" + cep + "\n logradouro=" + logradouro + "\n complemento=" + complemento + "\n bairro=" + bairro
-				+ "\n localidade=" + localidade + "\n uf=" + uf + "\n ibge=" + ibge + "\n gia=" + gia + "\n]";
+				+ "\n localidade=" + localidade + "\n uf=" + uf + "\n unidade=" + unidade + "\n ibge=" + ibge + "\n gia=" + gia + "\n]";
 	}
 }

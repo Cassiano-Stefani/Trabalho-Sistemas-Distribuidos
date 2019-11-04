@@ -26,6 +26,7 @@ public class CEPUtils {
 										converterEncoding(respostaJson.getString("bairro")),
 										converterEncoding(respostaJson.getString("localidade")), 
 										converterEncoding(respostaJson.getString("uf")),
+										converterEncoding(respostaJson.getString("unidade")),
 										converterEncoding(respostaJson.getString("ibge")), 
 										converterEncoding(respostaJson.getString("gia")));
 			} else {
@@ -74,7 +75,7 @@ public class CEPUtils {
 	}
 
 	private static String validarCEP(String cep) {
-		cep = cep.replaceAll("-", ""); // remove tra
+		cep = cep.trim().replaceAll("-", ""); // remove tra
 
 		if (cep.length() == 8) {
 			try {
