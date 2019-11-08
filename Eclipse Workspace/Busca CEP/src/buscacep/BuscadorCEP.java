@@ -8,10 +8,10 @@ import java.nio.charset.StandardCharsets;
 
 import org.json.JSONObject;
 
-public class CEPUtils {
+public class BuscadorCEP {
 	public static final String ERRO = "Erro";
 
-	public static CEPCompleto buscarCEP(String cep) {
+	public static CEP buscarCEP(String cep) {
 
 		String respostaViaCep = mandarRequisicaoHttp(cep);
 
@@ -20,7 +20,7 @@ public class CEPUtils {
 
 			if (!respostaJson.has("erro")) {
 
-				return new CEPCompleto(	converterEncoding(respostaJson.getString("cep")), 
+				return new CEP(	converterEncoding(respostaJson.getString("cep")), 
 										converterEncoding(respostaJson.getString("logradouro")),
 										converterEncoding(respostaJson.getString("complemento")), 
 										converterEncoding(respostaJson.getString("bairro")),
@@ -30,11 +30,11 @@ public class CEPUtils {
 										converterEncoding(respostaJson.getString("ibge")), 
 										converterEncoding(respostaJson.getString("gia")));
 			} else {
-				return new CEPCompleto(ERRO + ": CEP não encontrado no ViaCEP");
+				return new CEP(ERRO + ": CEP não encontrado no ViaCEP");
 			}
 
 		} else {
-			return new CEPCompleto(respostaViaCep);
+			return new CEP(respostaViaCep);
 		}
 	}
 	

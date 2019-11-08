@@ -2,7 +2,7 @@
     <wb-module deploy-name="Login Social Tomcat">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="Login_Social_Tomcat"/>
         <property name="java-output-path" value="/Login Social Tomcat/build/classes"/>
+        <property name="context-root" value="buscacepapp"/>
     </wb-module>
 </project-modules>

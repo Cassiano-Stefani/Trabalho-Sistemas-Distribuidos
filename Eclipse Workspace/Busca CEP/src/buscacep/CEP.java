@@ -3,7 +3,7 @@ package buscacep;
 /**
  * Representa a resposta dada pela API do ViaCEP
  */
-public class CEPCompleto {
+public class CEP {
 	public String cep;
 	public String logradouro;
 	public String complemento;
@@ -16,7 +16,7 @@ public class CEPCompleto {
 
 	public String erro;
 	
-	public CEPCompleto(String cep, String logradouro, String complemento, String bairro, String localidade, String uf, String unidade,
+	public CEP(String cep, String logradouro, String complemento, String bairro, String localidade, String uf, String unidade,
 			String ibge, String gia) {
 		this.cep = cep;
 		this.logradouro = logradouro;
@@ -29,7 +29,7 @@ public class CEPCompleto {
 		this.gia = gia;
 	}
 
-	public CEPCompleto(String erro) {
+	public CEP(String erro) {
 		this.erro = erro;
 	}
 
