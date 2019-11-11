@@ -3,6 +3,7 @@
 	<name>Login Social Tomcat</name>
 	<comment></comment>
 	<projects>
+		<project>Utilidades</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

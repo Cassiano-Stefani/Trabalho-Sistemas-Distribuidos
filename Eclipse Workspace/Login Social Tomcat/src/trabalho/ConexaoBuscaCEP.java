@@ -3,20 +3,15 @@ package trabalho;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
-
 import utilidade.CustomSocket;
 import utilidade.EnderecoVirtual;
 
-@WebListener
-public class ConexaoBuscaCEP implements ServletContextListener {
+public class ConexaoBuscaCEP {
 
 	private EnderecoVirtual endBuscaCep = new EnderecoVirtual("localhost", 5110);
 	private CustomSocket socketBuscaCep;
 
-	private ConexaoBuscaCEP() {
+	public ConexaoBuscaCEP() {
 		try {
 			Socket socket = new Socket();
 
@@ -27,6 +22,8 @@ public class ConexaoBuscaCEP implements ServletContextListener {
 					break;
 				} catch (Exception e) {
 					System.out.println("Re-enviando solicitação de conexão para BuscaCEP");
+
+					Thread.sleep(1000);
 				}
 			}
 
@@ -39,11 +36,6 @@ public class ConexaoBuscaCEP implements ServletContextListener {
 
 	public CustomSocket getBuscaCEPSocket() {
 		return socketBuscaCep;
-	}
-
-	@Override
-	public void contextInitialized(ServletContextEvent e) {
-		getInstancia(); // cria a instancia quando o servidor starta
 	}
 
 	// static
@@ -62,6 +54,7 @@ public class ConexaoBuscaCEP implements ServletContextListener {
 					setInstancia(new ConexaoBuscaCEP());
 				}
 			});
+			conexaoBuscaCepThread.setDaemon(true);
 			conexaoBuscaCepThread.start();
 		}
 		return instancia;

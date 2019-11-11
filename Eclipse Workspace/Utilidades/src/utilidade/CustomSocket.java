@@ -50,4 +50,8 @@ public class CustomSocket {
 
 		this.socket.close();
 	}
+	
+	public static enum TipoMensagem {
+		IDENTIFICACAO_SOCKET,
+	}
 }
