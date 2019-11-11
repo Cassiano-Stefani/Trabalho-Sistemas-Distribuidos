@@ -1,9 +1,6 @@
 package buscacep;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 import utilidade.CustomSocket;
 import utilidade.EnderecoVirtual;
@@ -19,6 +16,6 @@ public class BuscaCEP {
 	private static CustomSocket socketFrontEnd;
 
 	public static void main(String[] args) {
-
+		
 	}
 }
