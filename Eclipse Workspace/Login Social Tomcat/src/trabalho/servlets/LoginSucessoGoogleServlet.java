@@ -12,10 +12,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
 import trabalho.Usuario;
+import trabalho.UsuariosLogados;
 
 @WebServlet("/login-sucesso-google")
 public class LoginSucessoGoogleServlet extends HttpServlet {
@@ -23,17 +25,28 @@ public class LoginSucessoGoogleServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String token = request.getParameter("idtoken");
+		JSONObject parsedToken = parseToken(request.getParameter("idtoken"));
+		
+		if (parsedToken.has("erro")) {
+			response.sendRedirect("/login.html"); // TODO testar
+		} else {
+			Usuario usuario = new Usuario("google", parsedToken.getString("sub"), parsedToken.getString("name"));
 
-		JSONObject pt = parseToken(token);
-		// salvar secao e registrar usuario, mandar redirect para outro servlet
-		if(pt.has("erro"))
-			System.out.println("ERRRRRO ");
-		else {
-			Usuario u = new Usuario("google", pt.getString("sub"), pt.getString("name"));
-			request.setAttribute("usuario", u);
-			RequestDispatcher rd = request.getRequestDispatcher("/pesquisa.jsp");
-			rd.forward(request, response);
+			HttpSession oldSession = request.getSession(false);
+			if (oldSession != null) {
+				oldSession.invalidate();
+				UsuariosLogados.deslogarUsuario(usuario);
+			}
+			// generate a new session
+			HttpSession newSession = request.getSession(true);
+			UsuariosLogados.logarUsuario(usuario, newSession);
+
+			// setting session to expiry in 5 mins
+			newSession.setMaxInactiveInterval(60 * 60 * 24);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("pesquisa.jsp");
+			request.setAttribute("usuario", usuario);
+			dispatcher.forward(request, response);
 		}
 	}
 

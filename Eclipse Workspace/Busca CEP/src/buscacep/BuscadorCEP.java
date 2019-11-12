@@ -8,6 +8,8 @@ import java.nio.charset.StandardCharsets;
 
 import org.json.JSONObject;
 
+import utilidade.CEP;
+
 public class BuscadorCEP {
 	public static final String ERRO = "Erro";
 

@@ -1,6 +1,5 @@
 package trabalho;
 
-import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import utilidade.CustomSocket;
@@ -13,23 +12,10 @@ public class ConexaoBuscaCEP {
 
 	public ConexaoBuscaCEP() {
 		try {
-			Socket socket = new Socket();
-
-			while (true) {
-				try {
-					socket.connect(new InetSocketAddress(endBuscaCep.ip, endBuscaCep.porta), 2000);
-					socketBuscaCep = new CustomSocket(socket);
-					break;
-				} catch (Exception e) {
-					System.out.println("Re-enviando solicitação de conexão para BuscaCEP");
-
-					Thread.sleep(1000);
-				}
-			}
-
+			Socket socket = new Socket(endBuscaCep.ip, endBuscaCep.porta);
 			socketBuscaCep = new CustomSocket(socket);
 		} catch (Exception e) {
-			System.err.println("Erro ao abrir socket TCP do login social");
+			System.err.println("Erro ao abrir socket TCP para busca CEP");
 			throw new RuntimeException(); // para JVM
 		}
 	}
@@ -42,20 +28,9 @@ public class ConexaoBuscaCEP {
 
 	private static ConexaoBuscaCEP instancia;
 
-	private static synchronized void setInstancia(ConexaoBuscaCEP inst) {
-		instancia = inst;
-	}
-
 	public static synchronized ConexaoBuscaCEP getInstancia() {
 		if (instancia == null) {
-			Thread conexaoBuscaCepThread = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					setInstancia(new ConexaoBuscaCEP());
-				}
-			});
-			conexaoBuscaCepThread.setDaemon(true);
-			conexaoBuscaCepThread.start();
+			instancia = new ConexaoBuscaCEP();
 		}
 		return instancia;
 	}

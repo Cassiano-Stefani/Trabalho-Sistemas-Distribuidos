@@ -20,6 +20,75 @@ public class CustomSocket {
 		}
 	}
 
+	public void enviarCEP(CEP cep) throws Exception {
+		Mensagem m = new Mensagem();
+
+		StringBuilder str = new StringBuilder();
+		str.append("cep=" + escreverVazio(cep.cep) + "\n");
+		str.append("logradouro=" + escreverVazio(cep.logradouro) + "\n");
+		str.append("complemento=" + escreverVazio(cep.complemento) + "\n");
+		str.append("bairro=" + escreverVazio(cep.bairro) + "\n");
+		str.append("localidade=" + escreverVazio(cep.localidade) + "\n");
+		str.append("uf=" + escreverVazio(cep.uf) + "\n");
+		str.append("unidade=" + escreverVazio(cep.unidade) + "\n");
+		str.append("ibge=" + escreverVazio(cep.ibge) + "\n");
+		str.append("gia=" + escreverVazio(cep.gia));
+
+		m.tipo = TipoMensagem.CEP.ordinal();
+		m.mensagem = str.toString();
+		enviarMensagem(m);
+	}
+
+	private String escreverVazio(String str) {
+		if (str.trim().length() == 0)
+			return "_";
+		return str.trim();
+	}
+
+	public CEP parseCEP(Mensagem m) throws Exception {
+		if (m.tipo != TipoMensagem.CEP.ordinal())
+			throw new RuntimeException("Erro: tentando ler CEP em mensagem que não é um CEP");
+
+		String[] linhas = m.mensagem.split("\n");
+
+		if (linhas.length != 9)
+			throw new RuntimeException("Erro: cep recebido com numero de atributos divergentes");
+
+		CEP cep = new CEP();
+
+		for (String linha : linhas) {
+			String[] par = linha.split("=");
+			if (par[0].equals("cep"))
+				cep.cep = parseVazio(par[1]);
+			else if (par[0].equals("logradouro"))
+				cep.logradouro = parseVazio(par[1]);
+			else if (par[0].equals("complemento"))
+				cep.complemento = parseVazio(par[1]);
+			else if (par[0].equals("bairro"))
+				cep.bairro = parseVazio(par[1]);
+			else if (par[0].equals("localidade"))
+				cep.localidade = parseVazio(par[1]);
+			else if (par[0].equals("uf"))
+				cep.uf = parseVazio(par[1]);
+			else if (par[0].equals("unidade"))
+				cep.unidade = parseVazio(par[1]);
+			else if (par[0].equals("ibge"))
+				cep.ibge = parseVazio(par[1]);
+			else if (par[0].equals("gia"))
+				cep.gia = parseVazio(par[1]);
+			else
+				throw new RuntimeException("Erro ao ler cep");
+		}
+
+		return cep;
+	}
+
+	private String parseVazio(String in) {
+		if (in.trim().equals("_"))
+			return "";
+		return in.trim();
+	}
+
 	public void enviarMensagem(Mensagem mensagem) throws Exception {
 		try {
 			this.socketOut.writeInt(mensagem.tipo);
@@ -29,7 +98,7 @@ public class CustomSocket {
 			throw new RuntimeException("Erro ao enviar mensagem");
 		}
 	}
-	
+
 	public Mensagem receberMensagem() throws Exception {
 		try {
 			Mensagem mensagem = new Mensagem();
@@ -40,7 +109,7 @@ public class CustomSocket {
 			throw new RuntimeException("Erro ao receber mensagem");
 		}
 	}
-	
+
 	public void fechar() throws Exception {
 		if (this.socketOut != null)
 			this.socketOut.close();
@@ -50,8 +119,8 @@ public class CustomSocket {
 
 		this.socket.close();
 	}
-	
+
 	public static enum TipoMensagem {
-		IDENTIFICACAO_SOCKET,
+		CEP, CEP_REQ, CEP_ERRO
 	}
 }

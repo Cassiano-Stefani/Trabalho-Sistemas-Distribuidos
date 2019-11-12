@@ -2,8 +2,11 @@ package buscacep;
 
 import java.net.ServerSocket;
 
+import utilidade.CEP;
 import utilidade.CustomSocket;
+import utilidade.CustomSocket.TipoMensagem;
 import utilidade.EnderecoVirtual;
+import utilidade.Mensagem;
 
 public class BuscaCEP {
 
@@ -14,7 +17,7 @@ public class BuscaCEP {
 	public static CustomSocket socketBancoDeDados;
 
 	public static CustomSocket socketFrontEnd;
-	
+
 	public static void main(String[] args) {
 		try {
 			socketServidorBuscaCEP = new ServerSocket(endBuscaCEP.porta);
@@ -36,9 +39,24 @@ public class BuscaCEP {
 			System.out.println("Erro ao receber conexões do FrontEnd");
 			return;
 		}
-		
+
 		while (true) {
-			
+			try {
+				Mensagem m = socketFrontEnd.receberMensagem();
+				if (m.tipo == TipoMensagem.CEP_REQ.ordinal()) {
+					String c = m.mensagem.trim();
+					CEP cep = BuscadorCEP.buscarCEP(c);
+					if (cep.erro == null || cep.erro.isEmpty()) {
+						socketFrontEnd.enviarCEP(cep);
+					} else {
+						System.out.println(cep.erro);
+						socketFrontEnd.enviarMensagem(new Mensagem(TipoMensagem.CEP_ERRO.ordinal(), cep.erro));
+					}
+				}
+
+			} catch (Exception e) {
+				System.out.println("Erro ao lidar com CEPs vindo do FrontEnd");
+			}
 		}
 	}
 }
