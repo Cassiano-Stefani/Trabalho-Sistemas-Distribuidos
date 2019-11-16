@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import trabalho.ConexaoBuscaCEP;
-import trabalho.Usuario;
 import trabalho.UsuariosLogados;
 import utilidade.CEP;
 import utilidade.CustomSocket;
 import utilidade.CustomSocket.TipoMensagem;
 import utilidade.Mensagem;
+import utilidade.Usuario;
 
 @WebServlet("/pesquisa-servlet")
 public class PesquisaServlet extends HttpServlet {
@@ -28,12 +28,12 @@ public class PesquisaServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		if (session == null) {
-			response.sendRedirect("login.html");
+			response.sendRedirect("/buscacepapp/login.html");
 		} else {
 			Usuario usuario = UsuariosLogados.getUsuarioBySessao(session);
 
 			if (usuario == null) {
-				response.sendRedirect("login.html");
+				response.sendRedirect("/buscacepapp/login.html");
 			} else {
 				String cep1 = request.getParameter("cep1");
 				String cep2 = request.getParameter("cep2");

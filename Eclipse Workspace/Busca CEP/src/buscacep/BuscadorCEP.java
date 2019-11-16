@@ -22,15 +22,10 @@ public class BuscadorCEP {
 
 			if (!respostaJson.has("erro")) {
 
-				return new CEP(	converterEncoding(respostaJson.getString("cep")), 
-										converterEncoding(respostaJson.getString("logradouro")),
-										converterEncoding(respostaJson.getString("complemento")), 
-										converterEncoding(respostaJson.getString("bairro")),
-										converterEncoding(respostaJson.getString("localidade")), 
-										converterEncoding(respostaJson.getString("uf")),
-										converterEncoding(respostaJson.getString("unidade")),
-										converterEncoding(respostaJson.getString("ibge")), 
-										converterEncoding(respostaJson.getString("gia")));
+				return new CEP(converterEncoding(respostaJson.getString("cep")),
+						converterEncoding(respostaJson.getString("logradouro")),
+						converterEncoding(respostaJson.getString("localidade")),
+						converterEncoding(respostaJson.getString("uf")));
 			} else {
 				return new CEP(ERRO + ": CEP não encontrado no ViaCEP");
 			}
@@ -39,7 +34,7 @@ public class BuscadorCEP {
 			return new CEP(respostaViaCep);
 		}
 	}
-	
+
 	private static String converterEncoding(String in) {
 		return new String(in.getBytes(), StandardCharsets.UTF_8);
 	}

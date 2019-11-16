@@ -3,34 +3,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<c:if test="${not empty usuario.nome and usuario.apiUsada eq 'google'}">
-			<script src="https://apis.google.com/js/platform.js"></script>
-			<meta name="google-signin-client_id" content="868339504339-rdfafplk7b4f1vve4r25kihuqo97mege.apps.googleusercontent.com">
-		</c:if>
 		
 		<meta charset="ISO-8859-1">
 		<title>Pesquisa CEP</title>
 	</head>
 	<body>
+		<img src="${usuario.imagem}"> </img>
+	
 		<h1>Logado como ${usuario.nome} </h1>
 		
-		<a href="#" onclick="signOut();">Sign out</a>
-		<c:if test="${not empty usuario.nome and usuario.apiUsada eq 'google'}">
-			<script>
-				if (!gapi.auth2) {
-					gapi.load('auth2', function() {
-						gapi.auth2.init();
-					});
-				}
-
-				function signOut() {
-					var auth2 = gapi.auth2.getAuthInstance();
-					auth2.signOut().then(function() {
-						auth2.disconnect();
-					});
-				}
-			</script>
-		</c:if>
 		
 		<form method="GET" action="/buscacepapp/pesquisa-servlet">
 			CEP 1: <input type="text" name="cep1"> <br/>

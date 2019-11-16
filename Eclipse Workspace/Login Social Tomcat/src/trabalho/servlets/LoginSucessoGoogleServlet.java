@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import trabalho.Usuario;
 import trabalho.UsuariosLogados;
+import utilidade.Usuario;
 
 @WebServlet("/login-sucesso-google")
 public class LoginSucessoGoogleServlet extends HttpServlet {
@@ -26,11 +26,12 @@ public class LoginSucessoGoogleServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		JSONObject parsedToken = parseToken(request.getParameter("idtoken"));
-		
+
 		if (parsedToken.has("erro")) {
-			response.sendRedirect("/login.html"); // TODO testar
+			response.sendRedirect("/buscacepapp/login.html"); // TODO testar
 		} else {
-			Usuario usuario = new Usuario("google", parsedToken.getString("sub"), parsedToken.getString("name"));
+			Usuario usuario = new Usuario("google", parsedToken.getString("sub"), parsedToken.getString("name"),
+					parsedToken.getString("picture"));
 
 			HttpSession oldSession = request.getSession(false);
 			if (oldSession != null) {
@@ -43,7 +44,7 @@ public class LoginSucessoGoogleServlet extends HttpServlet {
 
 			// setting session to expiry in 5 mins
 			newSession.setMaxInactiveInterval(60 * 60 * 24);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("pesquisa.jsp");
 			request.setAttribute("usuario", usuario);
 			dispatcher.forward(request, response);

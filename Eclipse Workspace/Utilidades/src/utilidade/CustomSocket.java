@@ -26,13 +26,8 @@ public class CustomSocket {
 		StringBuilder str = new StringBuilder();
 		str.append("cep=" + escreverVazio(cep.cep) + "\n");
 		str.append("logradouro=" + escreverVazio(cep.logradouro) + "\n");
-		str.append("complemento=" + escreverVazio(cep.complemento) + "\n");
-		str.append("bairro=" + escreverVazio(cep.bairro) + "\n");
 		str.append("localidade=" + escreverVazio(cep.localidade) + "\n");
 		str.append("uf=" + escreverVazio(cep.uf) + "\n");
-		str.append("unidade=" + escreverVazio(cep.unidade) + "\n");
-		str.append("ibge=" + escreverVazio(cep.ibge) + "\n");
-		str.append("gia=" + escreverVazio(cep.gia));
 
 		m.tipo = TipoMensagem.CEP.ordinal();
 		m.mensagem = str.toString();
@@ -62,20 +57,10 @@ public class CustomSocket {
 				cep.cep = parseVazio(par[1]);
 			else if (par[0].equals("logradouro"))
 				cep.logradouro = parseVazio(par[1]);
-			else if (par[0].equals("complemento"))
-				cep.complemento = parseVazio(par[1]);
-			else if (par[0].equals("bairro"))
-				cep.bairro = parseVazio(par[1]);
 			else if (par[0].equals("localidade"))
 				cep.localidade = parseVazio(par[1]);
 			else if (par[0].equals("uf"))
 				cep.uf = parseVazio(par[1]);
-			else if (par[0].equals("unidade"))
-				cep.unidade = parseVazio(par[1]);
-			else if (par[0].equals("ibge"))
-				cep.ibge = parseVazio(par[1]);
-			else if (par[0].equals("gia"))
-				cep.gia = parseVazio(par[1]);
 			else
 				throw new RuntimeException("Erro ao ler cep");
 		}

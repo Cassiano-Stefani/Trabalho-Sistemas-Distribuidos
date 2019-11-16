@@ -5,14 +5,9 @@ package utilidade;
  */
 public class CEP {
 	public String cep;
-	public String logradouro;
-	public String complemento;
-	public String bairro;
-	public String localidade;
+	public String logradouro; // rua
+	public String localidade; // cidade
 	public String uf;
-	public String unidade;
-	public String ibge;
-	public String gia;
 
 	public String erro;
 
@@ -20,17 +15,11 @@ public class CEP {
 
 	}
 
-	public CEP(String cep, String logradouro, String complemento, String bairro, String localidade, String uf,
-			String unidade, String ibge, String gia) {
+	public CEP(String cep, String logradouro, String localidade, String uf) {
 		this.cep = cep;
 		this.logradouro = logradouro;
-		this.complemento = complemento;
-		this.bairro = bairro;
 		this.localidade = localidade;
 		this.uf = uf;
-		this.unidade = unidade;
-		this.ibge = ibge;
-		this.gia = gia;
 	}
 
 	public CEP(String erro) {
@@ -39,9 +28,7 @@ public class CEP {
 
 	@Override
 	public String toString() {
-		return "[cep=" + cep + "\n logradouro=" + logradouro + "\n complemento=" + complemento + "\n bairro=" + bairro
-				+ "\n localidade=" + localidade + "\n uf=" + uf + "\n unidade=" + unidade + "\n ibge=" + ibge
-				+ "\n gia=" + gia + "\n]";
+		return "[cep=" + cep + "\n logradouro=" + logradouro + "\n localidade=" + localidade + "\n uf=" + uf + "\n]";
 	}
 
 	public String getCep() {
@@ -60,22 +47,6 @@ public class CEP {
 		this.logradouro = logradouro;
 	}
 
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
 	public String getLocalidade() {
 		return localidade;
 	}
@@ -90,30 +61,6 @@ public class CEP {
 
 	public void setUf(String uf) {
 		this.uf = uf;
-	}
-
-	public String getUnidade() {
-		return unidade;
-	}
-
-	public void setUnidade(String unidade) {
-		this.unidade = unidade;
-	}
-
-	public String getIbge() {
-		return ibge;
-	}
-
-	public void setIbge(String ibge) {
-		this.ibge = ibge;
-	}
-
-	public String getGia() {
-		return gia;
-	}
-
-	public void setGia(String gia) {
-		this.gia = gia;
 	}
 
 	public String getErro() {
