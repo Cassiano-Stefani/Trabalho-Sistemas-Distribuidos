@@ -51,9 +51,12 @@ public class LoginSucessoGithubServlet extends HttpServlet {
 
 				HttpSession oldSession = request.getSession(false);
 				if (oldSession != null) {
+					System.out.println("Deslogando usuario...");
 					oldSession.invalidate();
 					UsuariosLogados.deslogarUsuario(usuario);
 				}
+				System.out.println("Logando usuario " + usuario.getNome());
+
 				// generate a new session
 				HttpSession newSession = request.getSession(true);
 				UsuariosLogados.logarUsuario(usuario, newSession);
@@ -65,14 +68,17 @@ public class LoginSucessoGithubServlet extends HttpServlet {
 				request.setAttribute("usuario", usuario);
 				dispatcher.forward(request, response);
 			} else {
+				System.out.println("Erro ao validar token no Github");
 				response.sendRedirect("/buscacepapp/login.html");
 			}
 		} else {
+			System.out.println("Erro ao requisitar token de acesso ao Github");
 			response.sendRedirect("/buscacepapp/login.html");
 		}
 	}
 
 	private String getAccessToken(String token) {
+		System.out.println("Requisitando token de acesso ao Github...");
 		HttpURLConnection con;
 		try {
 			URL url = new URL("https://github.com/login/oauth/access_token?client_id=" + client + "&client_secret="
@@ -104,7 +110,7 @@ public class LoginSucessoGithubServlet extends HttpServlet {
 	}
 
 	private JSONObject parseToken(String access_token) {
-
+		System.out.println("Validando token no Github...");
 		HttpURLConnection con;
 		try {
 			URL url = new URL("https://api.github.com/user");

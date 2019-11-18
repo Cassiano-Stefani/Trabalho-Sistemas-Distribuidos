@@ -16,6 +16,7 @@ import utilidade.CEP;
 import utilidade.CustomSocket;
 import utilidade.CustomSocket.TipoMensagem;
 import utilidade.Mensagem;
+import utilidade.Pesquisa;
 import utilidade.Usuario;
 
 @WebServlet("/pesquisa-servlet")
@@ -42,38 +43,44 @@ public class PesquisaServlet extends HttpServlet {
 
 				CustomSocket socketBuscaCEP = ConexaoBuscaCEP.getInstancia().getBuscaCEPSocket();
 
-				try {
-					// TODO incluir usuario na busca etc...
-					socketBuscaCEP.enviarMensagem(new Mensagem(TipoMensagem.CEP_REQ.ordinal(), cep1));
-					socketBuscaCEP.enviarMensagem(new Mensagem(TipoMensagem.CEP_REQ.ordinal(), cep2));
-				} catch (Exception e) {
-					System.out.println("Erro ao requisitar busca de cep");
-				}
-
-				try {
-					Mensagem m1 = socketBuscaCEP.receberMensagem();
-					if (m1.tipo == TipoMensagem.CEP.ordinal()) {
-						CEP c1 = socketBuscaCEP.parseCEP(m1);
-						request.setAttribute("cep1", c1);
-					} else if (m1.tipo == TipoMensagem.CEP_ERRO.ordinal()) {
-						CEP c1 = new CEP(m1.mensagem);
-						request.setAttribute("cep1", c1);
-					} else {
-						System.out.println("Erro: mensagem recebida não era do tipo CEP");
+				if (cep1.isEmpty() && cep2.isEmpty()) {
+					request.setAttribute("erro1", "Erro: CEP Vazio");
+					request.setAttribute("erro2", "Erro: CEP Vazio");
+				} else if (cep1.isEmpty()) {
+					request.setAttribute("erro1", "Erro: CEP Vazio");
+					request.setAttribute("erro2", "Erro: CEP Origem Vazio");
+				} else if (cep2.isEmpty()) {
+					request.setAttribute("erro1", "Erro: CEP Destino Vazio");
+					request.setAttribute("erro2", "Erro: CEP Vazio");
+				} else {
+					try {
+						socketBuscaCEP.enviarCepReq(usuario, cep1, cep2);
+					} catch (Exception e) {
+						System.out.println("Erro ao requisitar busca de cep");
 					}
 
-					Mensagem m2 = socketBuscaCEP.receberMensagem();
-					if (m2.tipo == TipoMensagem.CEP.ordinal()) {
-						CEP c2 = socketBuscaCEP.parseCEP(m2);
-						request.setAttribute("cep2", c2);
-					} else if (m2.tipo == TipoMensagem.CEP_ERRO.ordinal()) {
-						CEP c2 = new CEP(m2.mensagem);
-						request.setAttribute("cep2", c2);
-					} else {
-						System.out.println("Erro: mensagem recebida não era do tipo CEP");
+					try {
+						Mensagem m = socketBuscaCEP.receberMensagem();
+						if (m.tipo == TipoMensagem.PESQUISA.ordinal()) {
+							Pesquisa p = socketBuscaCEP.parsePesquisa(m);
+							CEP c1 = p.getOrigem();
+							CEP c2 = p.getDestino();
+
+							if (c1.erro == null || c1.erro.isEmpty())
+								request.setAttribute("cep1", c1);
+							else
+								request.setAttribute("erro1", c1.erro);
+
+							if (c2.erro == null || c2.erro.isEmpty())
+								request.setAttribute("cep2", c2);
+							else
+								request.setAttribute("erro2", c2.erro);
+						} else {
+							System.out.println("Erro: mensagem recebida não era do tipo CEP");
+						}
+					} catch (Exception e) {
+						System.out.println("Erro ao ler resposta do BuscaCEP");
 					}
-				} catch (Exception e) {
-					System.out.println("Erro ao ler resposta do BuscaCEP");
 				}
 
 				RequestDispatcher disp = request.getRequestDispatcher("/displayCep.jsp");

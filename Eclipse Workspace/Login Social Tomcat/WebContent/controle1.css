@@ -1,0 +1,42 @@
+#quadro1 {
+	position: relative;
+	border: solid;
+	top: 250px;
+	margin: auto;
+	width: 400px;
+	height: 270px;
+	background: white;
+	border-radius: 5px;
+}
+
+#quadro1 fieldset {
+	border-radius: 5px;
+}
+
+#caixa {
+	padding: 10px;
+}
+
+#ponto1 {
+	padding-left: 90px;
+	padding-top: 20px;
+}
+
+#ponto2 {
+	padding-left: 90px;
+	padding-top: 10px;
+}
+
+#buscar {
+	padding-left: 170px;
+	padding-top: 10px;
+}
+
+#icone {
+	padding-left: 130px;
+}
+
+#avatar {
+	width: 106px;
+	height: auto;
+}

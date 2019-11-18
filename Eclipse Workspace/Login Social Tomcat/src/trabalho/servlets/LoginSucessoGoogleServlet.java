@@ -28,6 +28,7 @@ public class LoginSucessoGoogleServlet extends HttpServlet {
 		JSONObject parsedToken = parseToken(request.getParameter("idtoken"));
 
 		if (parsedToken.has("erro")) {
+			System.out.println("Erro ao validar token na Google");
 			response.sendRedirect("/buscacepapp/login.html"); // TODO testar
 		} else {
 			Usuario usuario = new Usuario("google", parsedToken.getString("sub"), parsedToken.getString("name"),
@@ -35,9 +36,13 @@ public class LoginSucessoGoogleServlet extends HttpServlet {
 
 			HttpSession oldSession = request.getSession(false);
 			if (oldSession != null) {
+				System.out.println("Deslogando usuario...");
 				oldSession.invalidate();
 				UsuariosLogados.deslogarUsuario(usuario);
 			}
+
+			System.out.println("Logando usuario " + usuario.getNome());
+
 			// generate a new session
 			HttpSession newSession = request.getSession(true);
 			UsuariosLogados.logarUsuario(usuario, newSession);
@@ -48,10 +53,12 @@ public class LoginSucessoGoogleServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("pesquisa.jsp");
 			request.setAttribute("usuario", usuario);
 			dispatcher.forward(request, response);
+
 		}
 	}
 
 	private JSONObject parseToken(String token) {
+		System.out.println("Validando token na Google...");
 		HttpURLConnection con;
 		try {
 			URL url = new URL("https://oauth2.googleapis.com/tokeninfo?id_token=" + token);

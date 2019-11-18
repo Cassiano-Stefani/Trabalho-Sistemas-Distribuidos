@@ -5,7 +5,7 @@ var startGoogleOAuth2Api = function() {
 			client_id : '868339504339-rdfafplk7b4f1vve4r25kihuqo97mege.apps.googleusercontent.com',
 			cookiepolicy : 'single_host_origin',
 		});
-		attachSignin(document.getElementById('customBtn'));
+		attachSignin(document.getElementById('google'));
 	});
 };
 
@@ -14,11 +14,11 @@ function attachSignin(element) {
 		document.getElementById("sucesso-google-idtoken").value = googleUser.getAuthResponse().id_token;
 		document.getElementById("sucesso-google").submit();
 	}, function(error) {
-		// ERRO login
+		
 	});
 }
 
-function signOut() {
+function signOutGoogle() {
 	var auth2 = gapi.auth2.getAuthInstance();
 	auth2.signOut().then(function () {
 		auth2.disconnect();

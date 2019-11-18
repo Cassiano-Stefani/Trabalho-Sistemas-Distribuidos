@@ -1,0 +1,50 @@
+body{
+	padding: 0px;
+	margin: 0px;
+}
+
+#quadro{
+	position: relative;
+	border: solid;
+	border-radius: 5px;
+	top: 150px;
+	width: 400px;
+	height: 300px;
+	margin: auto;
+	background: white;
+	text-align: center;
+}
+
+#nome{
+	padding-top: 40px;
+}
+
+#caixa{
+	padding: 70px;
+	padding-top: 10px;
+}
+
+#google{
+	display: inline;
+}
+
+#google img, #github img{
+	max-width: 64px;
+	height: auto;
+	cursor: pointer;
+}
+
+#github{
+	display: inline;
+	padding-left: 10px;
+}
+
+#quadro fieldset{
+	border-radius: 5px;
+	text-align: center;
+}
+
+#quadro fieldset legend{
+	border-radius: 5px;
+	text-align: left;
+}

@@ -15,6 +15,7 @@ public class BuscadorCEP {
 
 	public static CEP buscarCEP(String cep) {
 
+		System.out.println("Buscando CEP no ViaCEP...");
 		String respostaViaCep = mandarRequisicaoHttp(cep);
 
 		if (!respostaViaCep.startsWith(ERRO)) {

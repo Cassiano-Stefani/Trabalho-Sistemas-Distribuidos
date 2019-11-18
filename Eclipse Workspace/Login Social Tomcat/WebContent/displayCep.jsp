@@ -4,17 +4,17 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
+		<title>BuscaRotas</title>
 	</head>
 	<body>
 		<h1>Logado como ${usuario.nome} </h1>
 		
 		
-		<p> ${not empty cep1.erro ? cep1.erro : cep1} </p>
+		<p> ${not empty erro1 ? erro1 : cep1} </p>
 		
 		<br/>
 		<br/>
 		
-		<p> ${not empty cep2.erro ? cep2.erro : cep2} </p>
+		<p> ${not empty erro2 ? erro2 : cep2} </p>
 	</body>
 </html>
