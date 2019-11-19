@@ -28,7 +28,26 @@ public class CEP {
 
 	@Override
 	public String toString() {
-		return "[cep=" + cep + "\n logradouro=" + logradouro + "\n localidade=" + localidade + "\n uf=" + uf + "\n]";
+		if (isNotEmpty(erro)) {
+			return erro;
+		} else {
+			String cepStr = cep;
+
+			if (isNotEmpty(logradouro))
+				cepStr += ", " + logradouro;
+
+			if (isNotEmpty(localidade))
+				cepStr += ", " + localidade;
+
+			if (isNotEmpty(uf))
+				cepStr += ", " + uf;
+
+			return cepStr;
+		}
+	}
+
+	private boolean isNotEmpty(String string) {
+		return string != null && !string.isEmpty();
 	}
 
 	public String getCep() {

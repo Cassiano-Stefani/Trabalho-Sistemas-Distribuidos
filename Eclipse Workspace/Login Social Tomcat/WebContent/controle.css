@@ -1,9 +1,9 @@
-body{
+body {
 	padding: 0px;
 	margin: 0px;
 }
 
-#quadro{
+#quadro {
 	position: relative;
 	border: solid;
 	border-radius: 5px;
@@ -15,36 +15,43 @@ body{
 	text-align: center;
 }
 
-#nome{
+#nome {
 	padding-top: 40px;
 }
 
-#caixa{
+#caixa {
 	padding: 70px;
 	padding-top: 10px;
 }
 
-#google{
+#google {
 	display: inline;
 }
 
-#google img, #github img{
+#google img, #github img {
 	max-width: 64px;
 	height: auto;
 	cursor: pointer;
 }
 
-#github{
+#github {
 	display: inline;
 	padding-left: 10px;
 }
 
-#quadro fieldset{
+#quadro fieldset {
 	border-radius: 5px;
 	text-align: center;
 }
 
-#quadro fieldset legend{
+#quadro fieldset legend {
 	border-radius: 5px;
-	text-align: left;
+}
+
+#erro {
+	position: relative;
+    color: red;
+    font-family: sans-serif;
+    font-size: 16px;
+    bottom: -15px;
 }

@@ -78,10 +78,8 @@ public class BuscaCEP {
 				}
 
 			} catch (Exception e) {
-				if (e instanceof RuntimeException)
-					System.out.println(e);
-				else
-					System.out.println("Erro ao lidar com CEPs vindo do FrontEnd");
+				System.out.println("Erro ao lidar com CEPs vindo do FrontEnd. Terminando Aplicação...");
+				System.exit(1);
 			}
 		}
 	}

@@ -20,6 +20,8 @@ public class UsuariosLogados {
 	}
 
 	public static Usuario getUsuarioBySessao(HttpSession sessao) {
+		if (sessao == null)
+			return null;
 
 		for (Usuario u : logadosGoogle.keySet()) {
 			if (logadosGoogle.get(u) != null && logadosGoogle.get(u).equals(sessao))

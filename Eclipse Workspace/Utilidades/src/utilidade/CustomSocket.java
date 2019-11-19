@@ -22,7 +22,7 @@ public class CustomSocket {
 	}
 
 	private String escreverVazio(String str) {
-		if (str.trim().length() == 0)
+		if (str == null || str.trim().length() == 0)
 			return "_";
 		return str.trim();
 	}
@@ -38,13 +38,14 @@ public class CustomSocket {
 		str.append("cep=" + escreverVazio(cep.cep) + "\n");
 		str.append("logradouro=" + escreverVazio(cep.logradouro) + "\n");
 		str.append("localidade=" + escreverVazio(cep.localidade) + "\n");
-		str.append("uf=" + escreverVazio(cep.uf));
+		str.append("uf=" + escreverVazio(cep.uf) + "\n");
+		str.append("erro=" + escreverVazio(cep.erro));
 		return str.toString();
 	}
 
 	private CEP cepFromString(String str) throws Exception {
 		String[] linhas = str.split("\n");
-		if (linhas.length != 4)
+		if (linhas.length != 5)
 			throw new RuntimeException("Erro: cep recebido com numero de atributos divergentes");
 		CEP cep = new CEP();
 		for (String linha : linhas) {
@@ -57,6 +58,8 @@ public class CustomSocket {
 				cep.localidade = parseVazio(par[1]);
 			else if (par[0].equals("uf"))
 				cep.uf = parseVazio(par[1]);
+			else if (par[0].equals("erro"))
+				cep.erro = parseVazio(par[1]);
 			else
 				throw new RuntimeException("Erro ao ler cep");
 		}

@@ -69,11 +69,11 @@ public class LoginSucessoGithubServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 			} else {
 				System.out.println("Erro ao validar token no Github");
-				response.sendRedirect("/buscacepapp/login.html");
+				response.sendRedirect("/buscacepapp/login?erro=true");
 			}
 		} else {
 			System.out.println("Erro ao requisitar token de acesso ao Github");
-			response.sendRedirect("/buscacepapp/login.html");
+			response.sendRedirect("/buscacepapp/login?erro=true");
 		}
 	}
 

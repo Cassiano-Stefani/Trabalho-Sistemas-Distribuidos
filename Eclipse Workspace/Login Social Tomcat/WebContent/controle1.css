@@ -4,13 +4,15 @@
 	top: 250px;
 	margin: auto;
 	width: 400px;
-	height: 270px;
+	height: auto;
 	background: white;
 	border-radius: 5px;
 }
 
 #quadro1 fieldset {
 	border-radius: 5px;
+	text-align: center;
+	font-family: sans-serif;
 }
 
 #caixa {
@@ -18,25 +20,63 @@
 }
 
 #ponto1 {
-	padding-left: 90px;
 	padding-top: 20px;
 }
 
 #ponto2 {
-	padding-left: 90px;
 	padding-top: 10px;
 }
 
-#buscar {
-	padding-left: 170px;
-	padding-top: 10px;
+#ponto1, #ponto2 {
+	text-align: right;
 }
 
-#icone {
-	padding-left: 130px;
+#buscarDiv {
+	padding-top: 10px;
 }
 
 #avatar {
 	width: 106px;
 	height: auto;
+}
+
+#nome {
+	max-width: 345px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+	font-size: 20px;
+	font-family: sans-serif;
+	padding-top: 10px;
+}
+
+#buscar {
+	cursor: pointer;
+	font-family: sans-serif;
+	text-decoration: underline;
+	font-size: 18px;
+}
+
+#sair>a {
+	color: black;
+	font-size: 18px;
+	font-family: sans-serif;
+	position: absolute;
+	top: 120px;
+	right: 28px;
+	text-decoration-color: gray;
+}
+
+input[type=text] {
+	background: #EEE;
+	border-radius: 2px;
+	border: 2px solid #999;
+	padding: 6px;
+	font-size: 16px;
+	margin-right: 62px;
+	width: 132px;
+}
+
+.erro {
+	border: 2px solid red !important;
 }

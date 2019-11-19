@@ -29,7 +29,7 @@ public class LoginSucessoGoogleServlet extends HttpServlet {
 
 		if (parsedToken.has("erro")) {
 			System.out.println("Erro ao validar token na Google");
-			response.sendRedirect("/buscacepapp/login.html"); // TODO testar
+			response.sendRedirect("/buscacepapp/login?erro=true");
 		} else {
 			Usuario usuario = new Usuario("google", parsedToken.getString("sub"), parsedToken.getString("name"),
 					parsedToken.getString("picture"));
